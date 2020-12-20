@@ -52,7 +52,7 @@ public class GraphicalEmulator extends Application {
                 .type(Arguments.fileType().acceptSystemIn().verifyCanRead())
                 .setDefault("-")
                 .nargs(1);
-        parser.addArgument("-c", "--connect")
+        parser.addArgument("-a", "--connect")
                 .help("Enabled Ethernet card and connects to destination.")
                 .metavar("<address:port>")
                 .type(String.class)
