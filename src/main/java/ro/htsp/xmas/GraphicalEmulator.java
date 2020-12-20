@@ -47,16 +47,16 @@ public class GraphicalEmulator extends Application {
         parser.addArgument("-n", "--no-double-buffer")
                 .help("Disables double buffering for screen (default: false).")
                 .action(storeTrue());
-        parser.addArgument("romFile")
-                .help("The path of the ROM file")
-                .type(Arguments.fileType().acceptSystemIn().verifyCanRead())
-                .setDefault("-")
-                .nargs(1);
         parser.addArgument("-a", "--connect")
                 .help("Enabled Ethernet card and connects to destination.")
                 .metavar("<address:port>")
                 .type(String.class)
                 .setDefault("");
+        parser.addArgument("romFile")
+                .help("The path of the ROM file")
+                .type(Arguments.fileType().acceptSystemIn().verifyCanRead())
+                .setDefault("-")
+                .nargs(1);
     }
 
     public static void main(String[] args) throws Exception {

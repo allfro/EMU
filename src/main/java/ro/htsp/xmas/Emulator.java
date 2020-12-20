@@ -1,6 +1,7 @@
 package ro.htsp.xmas;
 
 import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
 import ro.htsp.xmas.machine.CPU;
@@ -35,6 +36,11 @@ public class Emulator {
                 .metavar("<address:port>")
                 .type(String.class)
                 .setDefault("");
+        parser.addArgument("romFile")
+                .help("The path of the ROM file")
+                .type(Arguments.fileType().acceptSystemIn().verifyCanRead())
+                .setDefault("-")
+                .nargs(1);
     }
 
     List<Instruction> instructions = new ArrayList<>();
