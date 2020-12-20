@@ -14,12 +14,12 @@ public class Compare implements Operation {
 
     @Override
     public void execute(int cm, int b, int c) {
-        if ((cm & 030) == 030) {
-            compare(cm - 030, b, RAM.read(c));
-        } else if ((cm & 020) == 020) {
-            compare(cm - 020, RAM.read(b), c);
-        } else if ((cm & 010) == 010) {
-            compare(cm - 010, RAM.read(c), RAM.read(b));
+        if ((cm & 24) == 24) {
+            compare(cm - 24, b, RAM.read(c));
+        } else if ((cm & 16) == 16) {
+            compare(cm - 16, RAM.read(b), c);
+        } else if ((cm & 8) == 8) {
+            compare(cm - 8, RAM.read(c), RAM.read(b));
         } else {
             compare(cm, RAM.read(b), RAM.read(c));
         }

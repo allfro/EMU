@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 public class EthernetCard implements ControllableDevice {
     public static EthernetCard INSTANCE;
@@ -11,8 +13,12 @@ public class EthernetCard implements ControllableDevice {
     private final InputStream inputStream;
     private final OutputStream outputStream;
 
+    private final byte[] buffer = new byte[64];
+    private final ByteBuffer byteBuffer = ByteBuffer.allocate(64);
+
     public EthernetCard(String address, int port) throws IOException {
         EthernetCard.INSTANCE = this;
+        Arrays.fill(buffer, (byte) 0);
         Socket socket = new Socket(address, port);
         inputStream = socket.getInputStream();
         outputStream = socket.getOutputStream();
@@ -39,18 +45,19 @@ public class EthernetCard implements ControllableDevice {
 
     @Override
     public int read() {
-        try {
-            return inputStream.read() & 0b111_111;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1;
-        }
+        return byteBuffer.get();
     }
 
     @Override
     public int readControl() {
         try {
-            return inputStream.available() & 0b111_111;
+            if (byteBuffer.hasRemaining()) {
+                if (inputStream.available() == 0) {
+                    return 0;
+                }
+                byteBuffer.put(inputStream.readNBytes(63));
+            }
+            return byteBuffer.remaining();
         } catch (IOException e) {
             e.printStackTrace();
             return -1;
