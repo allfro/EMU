@@ -30,7 +30,7 @@ public class Emulator {
                 .help("Clock cycle period in nanoseconds (0 for no delay, default: 1000).")
                 .type(Integer.class)
                 .setDefault(1000);
-        parser.addArgument("-c", "--connect")
+        parser.addArgument("-a", "--connect")
                 .help("Enabled Ethernet card and connects to destination.")
                 .metavar("<address:port>")
                 .type(String.class)
