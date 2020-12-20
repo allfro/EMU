@@ -6,14 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Instruction {
-    private final int opc;
-    private final int a;
-    private final int b;
-    private final int c;
-    private Boolean condition;
-    private Operation operation;
-
-
     private static final Map<Integer, Map.Entry<Boolean, Operation>> SUPPORTED_OPERATIONS = new HashMap<>() {{
         put(1 + Add.INSTANCE.getOpCode(), new HashMap.SimpleEntry<>(null, Add.INSTANCE));
         put(22 + Add.INSTANCE.getOpCode(), new HashMap.SimpleEntry<>(true, Add.INSTANCE));
@@ -95,8 +87,13 @@ public class Instruction {
         put(22 + FixedPointMultiply.INSTANCE.getOpCode(), new HashMap.SimpleEntry<>(true, FixedPointMultiply.INSTANCE));
         put(43 + FixedPointMultiply.INSTANCE.getOpCode(), new HashMap.SimpleEntry<>(false, FixedPointMultiply.INSTANCE));
     }};
-
+    private final int opc;
+    private final int a;
+    private final int b;
+    private final int c;
     Map.Entry<Boolean, Operation> halt = new HashMap.SimpleEntry<>(null, Halt.INSTANCE);
+    private Boolean condition;
+    private Operation operation;
 
     public Instruction(byte[] instruction) {
         int inst = ((instruction[0] & 255) << 16) | ((instruction[1] & 255) << 8) | (instruction[2] & 255);

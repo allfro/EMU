@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SerialDevice implements Device {
+public class SerialDevice implements ControllableDevice {
 
     public static final SerialDevice INSTANCE = new SerialDevice();
     private static String buffer = "";

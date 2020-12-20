@@ -1,6 +1,7 @@
 package ro.htsp.xmas;
 
 import ro.htsp.xmas.machine.DirectionPad;
+import ro.htsp.xmas.machine.EthernetCard;
 import ro.htsp.xmas.machine.Monitor;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -51,6 +52,11 @@ public class GraphicalEmulator extends Application {
                 .type(Arguments.fileType().acceptSystemIn().verifyCanRead())
                 .setDefault("-")
                 .nargs(1);
+        parser.addArgument("-c", "--connect")
+                .help("Enabled Ethernet card and connects to destination.")
+                .metavar("<address:port>")
+                .type(String.class)
+                .setDefault("");
     }
 
     public static void main(String[] args) throws Exception {
@@ -75,7 +81,11 @@ public class GraphicalEmulator extends Application {
         int clockPeriod = namespace.getInt("clock");
         boolean isEncoded = !namespace.getBoolean("raw");
         boolean doubleBuffer = !namespace.getBoolean("no_double_buffer");
+        String connect = namespace.getString("connect");
         File romFile = (File)namespace.getList("romFile").get(0);
+
+        if (!connect.isEmpty())
+            EthernetCard.init(connect);
 
         Monitor monitor = new Monitor(doubleBuffer, scale);
         Rectangle[] onScreen = monitor.getBuffer();

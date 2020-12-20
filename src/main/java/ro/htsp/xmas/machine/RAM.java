@@ -17,7 +17,7 @@ public class RAM {
 
     public static void write(int slot, int value) {
         if (slot != 0)
-            slots[slot] = (byte)(value & 0b111111);
+            slots[slot] = (byte) (value & 0b111111);
     }
 
     public static byte read(int slot) {

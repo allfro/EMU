@@ -4,12 +4,11 @@ import java.util.Arrays;
 
 public class ExtendedRAM implements Device {
     public static final ExtendedRAM INSTANCE = new ExtendedRAM();
-
-    private int memoryPointer = 0;
     private final byte[] memory = new byte[0b111_111_111_111_111_111 + 1];
+    private int memoryPointer = 0;
 
     public ExtendedRAM() {
-        Arrays.fill(memory, (byte)0);
+        Arrays.fill(memory, (byte) 0);
     }
 
     private void incrementMemoryPointer() {
@@ -18,7 +17,7 @@ public class ExtendedRAM implements Device {
 
     @Override
     public void write(int value) {
-        memory[memoryPointer] = (byte)(value & 0b111_111);
+        memory[memoryPointer] = (byte) (value & 0b111_111);
         incrementMemoryPointer();
     }
 

@@ -30,6 +30,13 @@ public class IO implements Operation {
             RAM.write(rd, CPU.getClockHigh());
             if (RAM.read(rs) != 0)
                 CPU.resetClock();
+        } else if (ix == 8) {
+            RAM.write(rd, EthernetCard.INSTANCE.readControl());
+        }  else if (ix == 9) {
+            RAM.write(rd, EthernetCard.INSTANCE.read());
+        }  else if (ix == 10) {
+            EthernetCard.INSTANCE.write(RAM.read(rs));
+            RAM.write(rd, -1);
         } else if (ix == 16) {
             ExtendedRAM.INSTANCE.writeHigh(RAM.read(rs));
             RAM.write(rd, -1);

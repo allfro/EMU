@@ -8,7 +8,7 @@ public class CPU {
     private static int clock = 0;
     private static List<Instruction> instructions;
 
-    public static void incrementClock()  {
+    public static void incrementClock() {
         if (clock != 0b111_111_111_111)
             clock += 1;
     }

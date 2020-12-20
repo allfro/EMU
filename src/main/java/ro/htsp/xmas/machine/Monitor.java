@@ -4,14 +4,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Monitor {
-    public static Monitor INSTANCE;
-
-    private final Rectangle[] buffer = new Rectangle[64 * 64];
-    private final Rectangle[] onScreen = new Rectangle[64 * 64];
-
-    private final int scale;
-    private final boolean doubleBuffer;
-
     private static final String[] COLOR_MAP = new String[]{
             "#000000", "#000055", "#0000aa", "#0000ff", "#550000", "#550055", "#5500aa", "#5500ff", "#aa0000",
             "#aa0055", "#aa00aa", "#aa00ff", "#ff0000", "#ff0055", "#ff00aa", "#ff00ff", "#005500", "#005555",
@@ -22,6 +14,11 @@ public class Monitor {
             "#55ffaa", "#55ffff", "#aaff00", "#aaff55", "#aaffaa", "#aaffff", "#ffff00", "#ffff55", "#ffffaa",
             "#ffffff"
     };
+    public static Monitor INSTANCE;
+    private final Rectangle[] buffer = new Rectangle[64 * 64];
+    private final Rectangle[] onScreen = new Rectangle[64 * 64];
+    private final int scale;
+    private final boolean doubleBuffer;
 
     public Monitor(boolean doubleBuffer, int scale) {
         this.scale = scale;

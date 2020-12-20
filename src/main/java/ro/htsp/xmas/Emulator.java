@@ -2,7 +2,9 @@ package ro.htsp.xmas;
 
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.Namespace;
 import ro.htsp.xmas.machine.CPU;
+import ro.htsp.xmas.machine.EthernetCard;
 import ro.htsp.xmas.machine.Instruction;
 
 import java.io.File;
@@ -28,6 +30,11 @@ public class Emulator {
                 .help("Clock cycle period in nanoseconds (0 for no delay, default: 1000).")
                 .type(Integer.class)
                 .setDefault(1000);
+        parser.addArgument("-c", "--connect")
+                .help("Enabled Ethernet card and connects to destination.")
+                .metavar("<address:port>")
+                .type(String.class)
+                .setDefault("");
     }
 
     List<Instruction> instructions = new ArrayList<>();
@@ -86,16 +93,15 @@ public class Emulator {
     }
 
     public static void main(String[] args) throws Exception {
-        Emulator.runProgram(new File("mandelflag.rom"), true);
-//        Group root = new Group();
-//        Scene s = new Scene(root, 300, 300, Color.BLACK);
-//
-//        final Canvas canvas = new Canvas(250,250);
-//        GraphicsContext gc = canvas.getGraphicsContext2D();
-//
-//        gc.setFill(Color.BLUE);
-//        gc.fillRect(75,75,100,100);
-//
-//        root.getChildren().add(canvas);
+        Namespace namespace = parser.parseArgs(args);
+
+        boolean isEncoded = !namespace.getBoolean("raw");
+        String connect = namespace.getString("connect");
+        File romFile = (File)namespace.getList("romFile").get(0);
+
+        if (!connect.isEmpty())
+            EthernetCard.init(connect);
+
+        Emulator.runProgram(romFile, isEncoded);
     }
 }
