@@ -64,4 +64,9 @@ public class IO implements Operation {
             RAM.write(rd, DirectionPad.INSTANCE.read());
         }
     }
+
+    @Override
+    public String decode(Boolean condition, int rd, int ix, int rs) {
+        return InstructionDecoder.decodeIO(condition, rd, ix, rs);
+    }
 }

@@ -59,9 +59,11 @@ public class Emulator {
         FileInputStream fis = new FileInputStream(file);
         System.err.print("Loading program... ");
         while (fis.available() > 0) {
-            byte[] instruction = fis.readNBytes(3);
-            if (instruction.length == 0) break;
-            instructions.add(new Instruction(instruction));
+            byte[] instructionBytes = fis.readNBytes(3);
+            if (instructionBytes.length == 0) break;
+            Instruction instruction = new Instruction(instructionBytes);
+//            System.err.println("DEBUG: " + instruction);
+            instructions.add(instruction);
         }
         System.err.println("done.");
     }
@@ -71,9 +73,11 @@ public class Emulator {
         Base64.Decoder decoder = Base64.getMimeDecoder();
         System.err.print("Loading program... ");
         while (fis.available() > 0) {
-            byte[] instruction = decoder.decode(fis.readNBytes(4));
-            if (instruction.length == 0) break;
-            instructions.add(new Instruction(instruction));
+            byte[] instructionBytes = decoder.decode(fis.readNBytes(4));
+            if (instructionBytes.length == 0) break;
+            Instruction instruction = new Instruction(instructionBytes);
+//            System.err.println("DEBUG: " + instruction);
+            instructions.add(instruction);
         }
         System.err.println("done.");
     }

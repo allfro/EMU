@@ -119,4 +119,8 @@ public class Instruction {
         if (isActive())
             operation.execute(a, b, c);
     }
+
+    public String toString() {
+        return operation.decode(condition, a, b, c);
+    }
 }

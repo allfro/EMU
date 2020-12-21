@@ -16,4 +16,9 @@ public class ShiftArithmeticRight implements Operation {
         RAM.write(rd, RAM.readSigned(ra) >> ib);
     }
 
+    @Override
+    public String decode(Boolean condition, int rd, int ra, int ib) {
+        return InstructionDecoder.decodeRRI(condition, "sar", rd, ra, ib);
+    }
+
 }

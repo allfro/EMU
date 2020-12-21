@@ -16,4 +16,9 @@ public class ShiftRight implements Operation {
     public void execute(int rd, int ra, int rb) {
         RAM.write(rd, RAM.read(ra) >>> RAM.read(rb));
     }
+
+    @Override
+    public String decode(Boolean condition, int rd, int ra, int rb) {
+        return InstructionDecoder.decodeRRR(condition, "shr", rd, ra, rb);
+    }
 }

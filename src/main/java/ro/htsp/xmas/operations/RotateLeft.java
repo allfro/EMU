@@ -20,4 +20,9 @@ public class RotateLeft implements Operation {
         RAM.write(rd, value);
     }
 
+    @Override
+    public String decode(Boolean condition, int rd, int ra, int ib) {
+        return InstructionDecoder.decodeRRI(condition, "rol", rd, ra, ib);
+    }
+
 }

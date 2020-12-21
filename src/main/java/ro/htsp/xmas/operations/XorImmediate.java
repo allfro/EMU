@@ -17,4 +17,9 @@ public class XorImmediate implements Operation {
         RAM.write(rd, RAM.read(ra) ^ ib);
     }
 
+    @Override
+    public String decode(Boolean condition, int rd, int ra, int ib) {
+        return InstructionDecoder.decodeRRI(condition, "xor", rd, ra, ib);
+    }
+
 }

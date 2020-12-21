@@ -17,4 +17,9 @@ public class And implements Operation {
         RAM.write(rd, RAM.read(ra) & RAM.read(rb));
     }
 
+    @Override
+    public String decode(Boolean condition, int rd, int ra, int rb) {
+        return InstructionDecoder.decodeRRR(condition, "and", rd, ra, rb);
+    }
+
 }

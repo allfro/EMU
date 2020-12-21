@@ -11,8 +11,13 @@ public class Label implements Operation {
     }
 
     @Override
-    public void execute(int rd, int ra, int rb) {
+    public void execute(int la, int lb, int c) {
 
+    }
+
+    @Override
+    public String decode(Boolean condition, int la, int lb, int c) {
+        return InstructionDecoder.decodeLabel(condition, (64 * la) + lb, c);
     }
 
 }

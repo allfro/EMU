@@ -21,6 +21,11 @@ public class FixedPointMultiply implements Operation {
         }
     }
 
+    @Override
+    public String decode(Boolean condition, int rd, int ra, int pr) {
+        return InstructionDecoder.decodeFixedPointMultiply(condition, rd, ra, pr);
+    }
+
     private void signedMultiply(int rd, int ra, int shift) {
         RAM.write(rd, (RAM.readSigned(rd) * RAM.readSigned(ra)) >> shift);
     }

@@ -18,4 +18,9 @@ public class JumpDown implements Operation {
         CPU.jumpDown((64 * la) + lb, RAM.read(rc));
     }
 
+    @Override
+    public String decode(Boolean condition, int la, int lb, int rc) {
+        return InstructionDecoder.decodeJumpDown(condition, (64 * la) + lb, rc);
+    }
+
 }

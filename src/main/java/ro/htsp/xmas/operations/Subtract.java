@@ -15,4 +15,9 @@ public class Subtract implements Operation {
     public void execute(int rd, int ra, int rb) {
         RAM.write(rd, RAM.read(ra) - RAM.read(rb));
     }
+
+    @Override
+    public String decode(Boolean condition, int rd, int ra, int rb) {
+        return InstructionDecoder.decodeRRR(condition, "sub", rd, ra, rb);
+    }
 }

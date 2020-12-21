@@ -25,6 +25,11 @@ public class Compare implements Operation {
         }
     }
 
+    @Override
+    public String decode(Boolean condition, int cm, int oa, int ob) {
+        return InstructionDecoder.decodeCompare(condition, cm, oa, ob);
+    }
+
     private void compare(int comparison, int a, int b) {
         switch (comparison) {
             case 0:

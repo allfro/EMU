@@ -18,4 +18,9 @@ public class JumpUp implements Operation {
         CPU.jumpUp((64 * la) + lb, RAM.read(rc));
     }
 
+    @Override
+    public String decode(Boolean condition, int la, int lb, int rc) {
+        return InstructionDecoder.decodeJumpUp(condition, (64 * la) + lb, rc);
+    }
+
 }

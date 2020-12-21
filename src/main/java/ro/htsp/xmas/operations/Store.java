@@ -16,4 +16,9 @@ public class Store implements Operation {
     public void execute(int rs, int ra, int ib) {
         RAM.write((RAM.read(ra) + ib) % 64, RAM.read(rs));
     }
+
+    @Override
+    public String decode(Boolean condition, int rs, int ra, int ib) {
+        return InstructionDecoder.decodeStore(condition, rs, ra, ib);
+    }
 }

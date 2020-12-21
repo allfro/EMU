@@ -15,4 +15,9 @@ public class Halt implements Operation {
         System.exit(0);
     }
 
+    @Override
+    public String decode(Boolean condition, int a, int b, int c) {
+        return "halt";
+    }
+
 }

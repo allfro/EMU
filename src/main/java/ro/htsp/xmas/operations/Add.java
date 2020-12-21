@@ -16,7 +16,8 @@ public class Add implements Operation {
         RAM.write(rd, RAM.read(ra) + RAM.read(rb));
     }
 
-    public void decode(int rd, int ra, int rb, Boolean condition) {
-        DecoderUtils.printInstructionRRR("add", condition, rd, ra, rb);
+    public String decode(Boolean condition, int rd, int ra, int rb) {
+        return InstructionDecoder.decodeRRR(condition, "add", rd, ra, rb);
     }
+
 }

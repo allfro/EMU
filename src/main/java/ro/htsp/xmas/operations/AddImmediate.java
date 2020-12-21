@@ -15,4 +15,9 @@ public class AddImmediate implements Operation {
     public void execute(int rd, int ra, int ib) {
         RAM.write(rd, RAM.read(ra) + ib);
     }
+
+    @Override
+    public String decode(Boolean condition, int rd, int ra, int ib) {
+        return InstructionDecoder.decodeRRI(condition, "add", rd, ra, ib);
+    }
 }

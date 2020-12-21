@@ -16,4 +16,9 @@ public class ShiftLeftImmediate implements Operation {
         RAM.write(rd, (RAM.read(ra) << ib) & 0b111_111);
     }
 
+    @Override
+    public String decode(Boolean condition, int rd, int ra, int ib) {
+        return InstructionDecoder.decodeRRI(condition, "shl", rd, ra, ib);
+    }
+
 }
