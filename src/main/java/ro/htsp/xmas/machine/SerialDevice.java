@@ -24,6 +24,8 @@ public class SerialDevice implements ControllableDevice {
     }
 
     public int readControl() {
+        if (!buffer.isEmpty())
+            return buffer.length();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
             System.out.print("> ");

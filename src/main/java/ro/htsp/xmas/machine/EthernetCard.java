@@ -14,7 +14,7 @@ public class EthernetCard implements ControllableDevice {
     private final OutputStream outputStream;
 
     private final byte[] buffer = new byte[64];
-    private final ByteBuffer byteBuffer = ByteBuffer.allocate(64);
+    private ByteBuffer byteBuffer = ByteBuffer.allocate(0);
 
     public EthernetCard(String address, int port) throws IOException {
         EthernetCard.INSTANCE = this;
@@ -45,19 +45,20 @@ public class EthernetCard implements ControllableDevice {
 
     @Override
     public int read() {
-        return byteBuffer.get();
+        return byteBuffer.get() & 0b111_111;
     }
 
     @Override
     public int readControl() {
         try {
-            if (byteBuffer.hasRemaining()) {
-                if (inputStream.available() == 0) {
+            if (!byteBuffer.hasRemaining()) {
+                int available = inputStream.available();
+                if (available == 0) {
                     return 0;
                 }
-                byteBuffer.put(inputStream.readNBytes(63));
+                byteBuffer = ByteBuffer.wrap(inputStream.readNBytes(available));
             }
-            return byteBuffer.remaining();
+            return Math.min(byteBuffer.remaining(), 63);
         } catch (IOException e) {
             e.printStackTrace();
             return -1;

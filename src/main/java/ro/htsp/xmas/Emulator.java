@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static net.sourceforge.argparse4j.impl.Arguments.storeTrue;
 
@@ -101,6 +104,7 @@ public class Emulator {
     public static void main(String[] args) throws Exception {
         Namespace namespace = parser.parseArgs(args);
 
+        int clockPeriod = namespace.getInt("clock");
         boolean isEncoded = !namespace.getBoolean("raw");
         String connect = namespace.getString("connect");
         File romFile = (File)namespace.getList("romFile").get(0);
@@ -108,6 +112,13 @@ public class Emulator {
         if (!connect.isEmpty())
             EthernetCard.init(connect);
 
-        Emulator.runProgram(romFile, isEncoded);
+        if (clockPeriod != 0) {
+            Emulator emulator = Emulator.loadProgram(romFile, isEncoded);
+            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+            scheduler.scheduleAtFixedRate(emulator::executeStep, 1000000000, clockPeriod, TimeUnit.NANOSECONDS);
+            scheduler.awaitTermination(1, TimeUnit.DAYS);
+        } else {
+            Emulator.runProgram(romFile, isEncoded);
+        }
     }
 }
